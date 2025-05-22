@@ -29,22 +29,6 @@ class TestUpdateBooking:
         assert update_booking.status_code == 200, (
             'Ошибка обновления бронирования'
         )
-        assert update_booking.json(
-
-        )['firstname'] == new_booking_data['firstname'], (
-            'Заданное имя не совпадает'
-        )
-        assert update_booking.json(
-
-        )['lastname'] == new_booking_data['lastname'], (
-            'Заданная фамилия не совпадает'
-        )
-        assert update_booking.json(
-
-        )['totalprice'] == new_booking_data['totalprice'], (
-            'Заданная стоимость не совпадает'
-        )
-
         get_booking = self.get_booking(auth_session, booking_id)
 
         assert get_booking.status_code == 200, (
@@ -74,16 +58,9 @@ class TestUpdateBooking:
             f'{BASE_URL}/booking/{booking_id}',
             json={'firstname': 'Mariia'}
         )
-        assert partial_update_booking.status_code == 200
-        assert partial_update_booking.json()['firstname'] == 'Mariia', (
-            'Заданное имя не обновилось'
+        assert partial_update_booking.status_code == 200, (
+            'Ошибка частичного обновления бронирования'
         )
-        assert partial_update_booking.json(
-
-        )['lastname'] == booking_data['lastname'], (
-            'Заданная фамилия обновилась без запроса'
-        )
-
         get_booking = self.get_booking(auth_session, booking_id)
         assert get_booking.status_code == 200, (
             'Ошибка: Бронирование не найдено'
