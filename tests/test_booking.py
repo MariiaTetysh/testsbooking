@@ -58,7 +58,7 @@ class TestBookings:
         assert response_data['lastname'] == booking_data['lastname'], (
             'Заданная фамилия не совпадает'
         )
-    
+
     def test_delete_booking(
         self, requester, booking_data
     ):

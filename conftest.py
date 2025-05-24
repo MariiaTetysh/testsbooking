@@ -8,38 +8,16 @@ from custom_requester.custom_requester import CustomRequester
 
 faker = Faker()
 
-
-# @pytest.fixture(scope="session")
-# def auth_session():
-#     session = requests.Session()
-#     session.headers.update(HEADERS)
-
-#     response = requests.post(
-#         f'{BASE_URL}{AUTH_ENDPOINT}',
-#         headers=HEADERS,
-#         json={"username": "admin", "password": "password123"}
-#     )
-
-#     assert response.status_code == 200, 'Ошибка авторизации'
-#     token = response.json().get('token')
-#     assert token is not None, 'Ошибка: токен не существует'
-#     session.headers.update({'Cookie': f'token={token}'})
-#     return session
-
 @pytest.fixture(scope='function')
 def test_user():
-    # """
-    # Генерация случайного пользователя для тестов.
-    # """
-    # random_first_name = DataGenerator.generate_random_first_name()
-    # random_last_name = DataGenerator.generate_random_last_name()
-    # random_username = f'{random_first_name}_{random_last_name}'
-    # random_password = DataGenerator.generate_random_password()
-
+    """
+    Генерация случайного пользователя для тестов.
+    """
     return {
         "username": "admin",
         "password": "password123"
     }
+
 
 @pytest.fixture(scope="function")
 def registered_user(requester, test_user):
@@ -56,7 +34,6 @@ def registered_user(requester, test_user):
     registered_user = test_user.copy()
     token = response_data.get('token')
     assert token is not None
-    # registered_user["id"] = response_data["id"]
     return registered_user
 
 
@@ -71,7 +48,9 @@ def requester():
         json={"username": "admin", "password": "password123"}
     )
     token = auth_response.json().get('token')
+    assert token is not None
     return CustomRequester(session=session, base_url=BASE_URL, token=token)
+
 
 @pytest.fixture(scope='function')
 def booking_data():
@@ -136,4 +115,3 @@ def invalid_booking_data_with_no_data():
         "bookingdates": None,
         "additionalneeds": None
     }
-

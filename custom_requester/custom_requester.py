@@ -29,9 +29,9 @@ class CustomRequester:
             self.session.headers.update({'Cookie': f'token={token}'})
 
     def send_request(
-            self, method, endpoint, data=None, 
-            expected_status=200, need_logging=True
-        ):
+        self, method, endpoint, data=None,
+        expected_status=200, need_logging=True
+    ):
         """
         Универсальный метод для отправки запросов.
         :param method: HTTP метод (GET, POST, PUT, DELETE и т.д.).
